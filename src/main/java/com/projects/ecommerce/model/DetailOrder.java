@@ -1,11 +1,24 @@
 package com.projects.ecommerce.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "detailorder")
 public class DetailOrder {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	private Double amount;
 	private Double price;
 	private Double total;
+
+	@OneToOne
+	private Order order;
+
+	@ManyToOne
+	private Product product;
 
 	public DetailOrder() {
 	}
@@ -58,6 +71,22 @@ public class DetailOrder {
 		this.total = total;
 	}
 
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
 	@Override
 	public String toString() {
 		return "DetailOrder{" +
@@ -66,6 +95,8 @@ public class DetailOrder {
 				", amount=" + amount +
 				", price=" + price +
 				", total=" + total +
+				", order=" + order +
+				", product=" + product +
 				'}';
 	}
 }

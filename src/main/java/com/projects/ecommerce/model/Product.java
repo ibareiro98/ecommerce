@@ -1,7 +1,13 @@
 package com.projects.ecommerce.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "products")
 public class Product {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	private String description;
@@ -9,16 +15,20 @@ public class Product {
 	private Double price;
 	private Integer amount;
 
+	@ManyToOne
+	private User user;
+
 	public Product() {
 	}
 
-	public Product(Integer id, String name, String description, String image, Double price, Integer amount) {
+	public Product(Integer id, String name, String description, String image, Double price, Integer amount, com.projects.ecommerce.model.User user) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.image = image;
 		this.price = price;
 		this.amount = amount;
+		this.user = user;
 	}
 
 	public Integer getId() {
@@ -69,6 +79,14 @@ public class Product {
 		this.amount = amount;
 	}
 
+	public com.projects.ecommerce.model.User getUser() {
+		return user;
+	}
+
+	public void setUser(com.projects.ecommerce.model.User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "Product{" +
@@ -78,6 +96,7 @@ public class Product {
 				", image='" + image + '\'' +
 				", price=" + price +
 				", amount=" + amount +
+				", user=" + user +
 				'}';
 	}
 }

@@ -1,13 +1,26 @@
 package com.projects.ecommerce.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name = "orders")
 public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String number;
     private Date creation_date;
     private Date reception_date;
     private double total;
+
+    @ManyToOne
+    private User user;
+
+    @OneToOne(mappedBy = "order")
+    private DetailOrder detailOrder;
 
     public Order() {
     }
@@ -60,6 +73,22 @@ public class Order {
         this.total = total;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public DetailOrder getDetailOrder() {
+        return detailOrder;
+    }
+
+    public void setDetailOrder(DetailOrder detailOrder) {
+        this.detailOrder = detailOrder;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -68,6 +97,8 @@ public class Order {
                 ", creation_date=" + creation_date +
                 ", reception_date=" + reception_date +
                 ", total=" + total +
+                ", user=" + user +
+                ", detailOrder=" + detailOrder +
                 '}';
     }
 }
